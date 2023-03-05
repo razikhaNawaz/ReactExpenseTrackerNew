@@ -1,14 +1,14 @@
 
-import { Fragment, useEffect } from 'react';
-import Authentication from './components/Authentication';
+import { Fragment } from 'react';
+import AddExpense from './components/Pages/AddExpense';
+// import Authentication from './components/Authentication';
 
 function App() {
-  useEffect(()=>{
-      console.log('useEffect called')
-  },[])
+  
   return (
    <Fragment>
-      <Authentication />
+      {/* <Authentication /> */}
+      <AddExpense />
       </Fragment>
   );
 }
