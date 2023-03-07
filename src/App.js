@@ -1,14 +1,18 @@
 
-import { Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import AddExpense from './components/Pages/AddExpense';
-// import Authentication from './components/Authentication';
+import Authentication from './components/Authentication';
+import ExpenseTable from './components/Pages/ExpenseTable';
+import AuthContext from './Store/AuthContext';
 
 function App() {
-  
+  const authCntx=useContext(AuthContext)
+  const isAuthenticate=authCntx.isAuthenticate;
   return (
    <Fragment>
-      {/* <Authentication /> */}
-      <AddExpense />
+      {!isAuthenticate && <Authentication />}
+      {isAuthenticate && <AddExpense />}
+      {isAuthenticate && <ExpenseTable />}
       </Fragment>
   );
 }

@@ -5,44 +5,36 @@ const AuthContext=React.createContext();
 
 export const AuthProvider=(props)=>{
     const [login, setLogin] =useState(true);
+    const [authenticate, setAuthenticate]=useState(false)
 let url;
-const Auth=async(obj)=>{
+const Auth=async(userEmail, userPassword)=>{
     
 if(login){
-     url='https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBWBlfzADZbvqEDqq7SnQINQ80zhX_jxD8'
+     url='https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDzHLLsqManLbUhdsiXD3aVt7uLbFJ3BOg'
 }else{
-     url='https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBWBlfzADZbvqEDqq7SnQINQ80zhX_jxD8'
+     url='https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDzHLLsqManLbUhdsiXD3aVt7uLbFJ3BOg'
 }
 
-fetch(url, {
+try{
+const response=await fetch(url,{
     method:'POST',
-    body:JSON.stringify(obj),
+    body:JSON.stringify({
+        email:userEmail,
+        password:userPassword,
+        returnSecureToken:true
+    }),
     headers:{
         'Content-Type':'application/json'
     }
 })
-.then((res)=>{
-    // res.then((resp)=>{
-    //     console.log(resp)
-    // })
-    console.log(res)
-}).catch((err)=>{
-    console.log(err)
-})
-// try{
-// const response=await fetch(url,{
-//     method:'POST',
-//     body:JSON.stringify(obj),
-//     headers:{
-//         'Content-Type':'application/json'
-//     }
-// })
-// const data=await response.json()
-// console.log(data)
-// }
-// catch(err){
-// console.log(err);
-// }
+const data=await response.json()
+console.log(data)
+setAuthenticate(true)
+localStorage.setItem('email', userEmail)
+}
+catch(err){
+console.log(err);
+}
 }
 
 
@@ -53,7 +45,8 @@ const switchAuthHandler=()=>{
     const values={
         switchAuth:switchAuthHandler,
         isLogin:login,
-        authFunction:Auth
+        authFunction:Auth,
+        isAuthenticate:authenticate
     }
     return (
         <AuthContext.Provider value={values} >

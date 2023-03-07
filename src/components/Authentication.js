@@ -24,12 +24,8 @@ const Authentication = () => {
 
     const submitHandler=(e)=>{
         e.preventDefault()
-        const obj={
-            userEmail:email,
-            userPassword:password,
-            returnSecureToken:true
-        }
-        AuthCntx.authFunction(obj)
+       
+        AuthCntx.authFunction(email, password)
     }
   return (
     <Fragment>
